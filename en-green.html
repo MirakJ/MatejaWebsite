@@ -45,49 +45,96 @@
     </div>
   </section>
 
-  <section id="contact">
-    <h2>Contact Me</h2>
-    <form id="contact-form" action="https://formspree.io/f/XXXXXXXX" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-      <label class="consent">
-        <input type="checkbox" name="consent" required>
-        <span>I agree to be contacted at the email I provided and I consent to the privacy policy.</span>
-      </label>
-      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-      <button type="submit">Send</button>
-      <p id="form-status" style="text-align:center; margin:0.5rem 0 0; font-size:0.95rem;"></p>
-      <noscript>
-        <p style="text-align:center">JavaScript is disabled—your message will still be sent via Formspree on submit.</p>
-      </noscript>
-    </form>
-    <script>
-      (function(){
-        const form = document.getElementById('contact-form');
-        const status = document.getElementById('form-status');
-        if(!form) return;
-        form.addEventListener('submit', async function(e){
-          e.preventDefault();
-          status.textContent = 'Sending…';
-          try {
-            const data = new FormData(form);
-            const res = await fetch(form.action, { method: form.method, body: data, headers: { 'Accept': 'application/json' }});
-            if (res.ok) {
-              status.textContent = 'Thanks! Your message has been sent.';
-              form.reset();
-            } else {
-              const json = await res.json().catch(()=>({}));
-              status.textContent = json.errors ? json.errors.map(e=>e.message).join(', ') : 'Oops, something went wrong. Please try again.';
-            }
-          } catch(err){
-            status.textContent = 'Network error—please try again.';
-          }
-        });
-      })();
-    </script>
-    <p style="text-align:center; font-size:0.9rem; color:#555; max-width:700px; margin:1rem auto 0;">By submitting, you agree to be contacted at the email you provide. We respect your privacy and will never share your information.</p>
-  </section>
+<section id="contact">
+  <h2>Contact Me</h2>
+  <form id="contact-gform"
+        action="https://docs.google.com/forms/d/e/1FAIpQLSfbDHp7OwrvhEujx-I_eaV-S6YI_LkpABeouMrtcDJIbTzbxQ/formResponse"
+        method="POST"
+        target="gform_target"
+        onsubmit="return gformSubmit()">
+
+    <input type="text" name="entry.935780728" placeholder="Your Name" required>
+    <input type="email" name="entry.1100355233" placeholder="Your Email" required>
+    <textarea name="entry.1562182201" placeholder="Your Message" rows="5" required></textarea>
+
+    <!-- Consent checkbox -->
+    <label class="consent">
+      <input type="checkbox" name="consent" required>
+      <span>I agree to be contacted at the email I provided and I consent to the privacy policy.</span>
+    </label>
+
+    <!-- Honeypot (hidden) -->
+    <input type="text" name="website" autocomplete="off" tabindex="-1"
+           style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+
+    <!-- Google metadata -->
+    <input type="hidden" name="fvv" value="1">
+    <input type="hidden" name="draftResponse" value="[]">
+    <input type="hidden" name="pageHistory" value="0">
+    <input type="hidden" name="usp" value="pp_url">
+    <input type="hidden" name="fbzx" id="fbzx">
+
+    <button type="submit" id="contact-submit">Send</button>
+  </form>
+
+  <!-- Hidden iframe catches Google’s response -->
+  <iframe name="gform_target" id="gform_target" style="display:none"></iframe>
+
+  <!-- Custom thank-you message -->
+  <p id="thanks" style="display:none; text-align:center; margin-top:0.5rem;">
+    Thanks! Your message has been sent.
+  </p>
+</section>
+
+<script>
+  (function () {
+    const MIN_DWELL_MS = 5000; // require 5s on page before submit
+    const startTime = Date.now();
+
+    window.gformSubmit = function () {
+      const form   = document.getElementById('contact-gform');
+      const btn    = document.getElementById('contact-submit');
+      const iframe = document.getElementById('gform_target');
+      const fbzx   = document.getElementById('fbzx');
+      const thanks = document.getElementById('thanks');
+
+      // Honeypot: if filled, block
+      if (form.querySelector('[name="website"]').value.trim() !== "") return false;
+
+      // Dwell-time: too fast -> block
+      if (Date.now() - startTime < MIN_DWELL_MS) {
+        alert("Please wait a moment before submitting.");
+        return false;
+      }
+
+      // Prevent double submit
+      if (btn.disabled) return false;
+
+      // Dynamic token for Google
+      if (fbzx) fbzx.value = String(Date.now());
+
+      // Show sending state
+      btn.textContent = 'Sending…';
+      btn.disabled = true;
+
+      // Mark completion
+      function complete() {
+        form.reset();
+        btn.textContent = 'Sent';
+        btn.disabled = true;
+        if (thanks) thanks.style.display = 'block';
+        iframe.removeEventListener('load', onLoad);
+      }
+
+      // On iframe load or fallback
+      function onLoad() { setTimeout(complete, 200); }
+      iframe.addEventListener('load', onLoad, { once: true });
+      setTimeout(complete, 6000); // fallback
+
+      return true;
+    };
+  })();
+</script>
 
   <footer>
     <p>&copy; 2025 Cognitive Behavioral Therapy by Person. All rights reserved.</p>
