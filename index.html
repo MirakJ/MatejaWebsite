@@ -3,34 +3,65 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cognitive Behavioral Therapy</title> 
+  <title>Pronoia Savjetovanje</title> 
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <header>
     <h1>Cognitive Behavioral Therapy by Person Name</h1>
     <p>Helping you unlock your potential with Cognitive Behavioral Therapy and coaching.</p>
-    <a class="btn" href="#contact">Contact Me</a>
+    <a class="btn" href="#contact">Kontaktiraj me</a>
   </header>
-
+  <article class="therapy-article">
 
 
   <section id="about">
-    <h2>About Me</h2>
-    <p style="max-width:700px; margin:auto; text-align:justify;">I am a certified Cognitive Behavioral Therapy (CBT) practitioner and coach dedicated to helping individuals shift their mindset, overcome limiting beliefs, and build a healthier relationship with themselves and others.</p>
+    <h2>O meni</h2>
+    <p style="max-width:700px; margin:auto; text-align:left;">
+      Zovem   se   Mateja,   socijalna   sam   pedagoginja   i   apsolventica
+      psihodramske   psihoterapije   pod supervizijom.
+    </p>
+    <p style="max-width:700px; margin:auto; text-align:left;">
+      Radno iskustvo gradila sam u zdravstvenom sektoru gdje sam se usmjerila na individualni
+      i grupni psihoterapijski rad s odraslim osobama. 
+      Pomagala sam pojedincima koji su imali izazove u privatnom i profesionalnom životu
+      ili su se našli u teškom životnom periodu. 
+    </p>
+    <p style="max-width:700px; margin:auto; text-align:left;">
+      Uz savjetodavni i psihoterapijski rad, 
+      koristim i PEAT, EMDR I NLP tehnike, koje pomažu u regulaciji emocija i suočavanja sa stresom.
+      U   slobodno   vrijeme   volim  istaživati  različite   kreativne   tehnike,   koje vrlo   rado  prenosim   i   u   svoj 
+      profesionalni rad. 
+    </p>
+    <p style="max-width:700px; margin:auto; text-align:left;">
+      Smatram da se kreativnost krije u svakome od nas. Kreatvne tehnike koje najčešće 
+      koristim su crtanje i fraktali, igranje uloga, korištenje asocijativnih karata, pisanje…</p>
   </section>
 
   <section id="blog">
-    <h2>Latest Blog Posts</h2>
+    <h2>Opširnije</h2>
     <div class="blog-grid">
-      <div class="blog-card"><h3>Zašto odabrati grupnu terapiju?</h3></div>
-      <div class="blog-card"><h3>Post Title Two</h3><p>Short teaser of your second blog article.</p></div>
-      <div class="blog-card"><h3>Post Title Three</h3><p>Short teaser of your third blog article.</p></div>
+  
+      <a href="article1.html" class="blog-card">
+        <h3>Zašto odabrati grupnu terapiju?</h3>
+        <p>Kratki uvod u važnost grupne terapije i što očekivati od susreta.</p>
+      </a>
+  
+      <a href="/articles/post-two/" class="blog-card">
+        <h3>Post Title Two</h3>
+        <p>Short teaser of your second blog article.</p>
+      </a>
+  
+      <a href="/articles/post-three/" class="blog-card">
+        <h3>Post Title Three</h3>
+        <p>Short teaser of your third blog article.</p>
+      </a>
+  
     </div>
   </section>
 
   <section id="services">
-    <h2>Services</h2>
+    <h2>Savjetovanja</h2>
     <div class="grid">
       <div class="card"><h3>Individualna terapija</h3><p>35 eura (online ili uživo)</p></div>
       <div class="card"><h3>Grupa</h3><p>20 eura po susretu</p></div>
@@ -38,19 +69,20 @@
       <div class="card"><h3>EMDR i PEAT</h3><p>po dogovoru</p></div>
     </div>
   </section>
+</article>
 
   <section id="contact">
-    <h2>Contact Me</h2>
+    <h2>Kontaktiraj me</h2>
     <form id="contact-form" action="https://formspree.io/f/XXXXXXXX" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <input type="text" name="name" placeholder="Tvoje ime" required>
+      <input type="email" name="email" placeholder="Adresa elektronske pošte" required>
+      <textarea name="message" rows="5" placeholder="Reci mi, kako ti mogu pomoći?" required></textarea>
       <label class="consent">
         <input type="checkbox" name="consent" required>
-        <span>I agree to be contacted at the email I provided and I consent to the privacy policy.</span>
+        <span>Slažem se da me kontaktirate na e-mail adresu koju sam naveo/la i prihvaćam pravila o privatnosti.</span>
       </label>
       <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-      <button type="submit">Send</button>
+      <button type="submit">Pošalji upit</button>
       <p id="form-status" style="text-align:center; margin:0.5rem 0 0; font-size:0.95rem;"></p>
       <noscript>
         <p style="text-align:center">JavaScript is disabled—your message will still be sent via Formspree on submit.</p>
@@ -80,7 +112,9 @@
         });
       })();
     </script>
-    <p style="text-align:center; font-size:0.9rem; color:#555; max-width:700px; margin:1rem auto 0;">By submitting, you agree to be contacted at the email you provide. We respect your privacy and will never share your information.</p>
+    <p style="text-align:center; font-size:0.9rem; color:#555; max-width:700px; margin:1rem auto 0;">
+      Poštujem vašu privatnost i nikada neću dijeliti vaše podatke.
+    </p>
   </section>
 
   <footer>
