@@ -1,6 +1,6 @@
 :root{
-    --blue:#006747; /* Pantone 3415C */
-    --blue-d:#004d35; /* darker hover */
+    --green:#006747; /* Pantone 3415C */
+    --green-d:#004d35; /* darker hover */
     --indigo:#003322; /* deep green for headings/footer */
     --bg:#f7fbf9; /* subtle greenish background */
     --panel:#ffffff; /* cards */
@@ -36,7 +36,7 @@ header p {
 
 .btn {
     display:inline-block; 
-    background:var(--blue); 
+    background:var(--green); 
     color:#fff; 
     padding:0.75rem 1.5rem; 
     border-radius:8px; 
@@ -48,7 +48,7 @@ header p {
 }
 
 .btn:hover {
-    background:var(--blue-d); 
+    background:var(--green-d); 
     transform:translateY(-1px);
 }
 
@@ -121,7 +121,7 @@ section:nth-of-type(5){animation-delay:1.5s;}
 section h2 {text-align:center; margin-bottom:2rem; color:var(--indigo);}
 
 .grid {display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem;}
-.card {background:var(--panel); padding:1.25rem; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.06); border-left:5px solid var(--blue); transition: transform 0.3s ease, box-shadow 0.3s ease;}
+.card {background:var(--panel); padding:1.25rem; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.06); border-left:5px solid var(--green); transition: transform 0.3s ease, box-shadow 0.3s ease;}
 .card:hover {transform: translateY(-5px); box-shadow:0 8px 18px rgba(0,0,0,0.14);}
 
 /* Blog section */
@@ -209,11 +209,11 @@ input, textarea {
     color: #333;                     /* softer gray instead of harsh black */
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
-input:focus, textarea:focus {border-color:var(--blue); box-shadow:0 0 0 4px rgba(0,103,71,0.15); outline:none;}
+input:focus, textarea:focus {border-color:var(--green); box-shadow:0 0 0 4px rgba(0,103,71,0.15); outline:none;}
 input::placeholder,textarea::placeholder{font-family: Arial, sans-serif; font-size: 1rem; color: #777;}
 input::invalid,textarea:invalid{border-color:#e53935;}
-button {padding:0.85rem 1.2rem; background:var(--blue); color:#fff; border:none; border-radius:8px; cursor:pointer; transition:.3s ease;}
-button:hover {background:var(--blue-d); transform:translateY(-1px);}
+button {padding:0.85rem 1.2rem; background:var(--green); color:#fff; border:none; border-radius:8px; cursor:pointer; transition:.3s ease;}
+button:hover {background:var(--green-d); transform:translateY(-1px);}
 
 /* Consent line fix */
 .consent {
@@ -289,4 +289,29 @@ footer {background:var(--indigo); color:#fff; text-align:center; padding:2rem 1r
   .blog-card p {
     font-size: 0.9rem;
     line-height: 1.5;
+  }
+
+  .back-btn {
+    display: inline-block;
+    background: var(--green);
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s ease, transform 0.2s ease;
+    margin-bottom: 1.5rem;
+  }
+  
+  .back-btn:hover {
+    background: var(--green-d);
+    transform: translateY(-2px);
+  }
+  
+  /* Optional: center it if you prefer */
+  .back-btn.centered {
+    display: block;
+    margin: 0 auto 2rem;
+    text-align: center;
+    width: fit-content;
   }
