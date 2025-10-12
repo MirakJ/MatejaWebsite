@@ -20,7 +20,7 @@ body {
 
 header {
     background:var(--muted); 
-    padding:4rem 1rem; 
+    padding:2rem 1rem; 
     text-align:center; 
     animation: fadeIn 1.5s ease-in-out;
 }
@@ -53,7 +53,7 @@ header p {
 }
 
 section {
-    padding:3rem 1rem; 
+    padding:1rem 1rem; 
     max-width:1000px; 
     margin:auto; 
     opacity:0; 
@@ -73,13 +73,18 @@ section {
   
   .therapy-article h2 {
     color: var(--green);
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     text-align: center;
   }
   
   .therapy-article h3 {
     color: var(--green-d);
-    margin-top: 2rem;
+    margin-top: 1rem;
+  }
+
+  .therapy-article h4 {
+    color: var(--green-d);
+    margin-top: 1rem;
   }
   
   .therapy-article p {
@@ -120,9 +125,35 @@ section:nth-of-type(4){animation-delay:1.2s;}
 section:nth-of-type(5){animation-delay:1.5s;}
 section h2 {text-align:center; margin-bottom:2rem; color:var(--indigo);}
 
-.grid {display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1.25rem;}
-.card {background:var(--panel); padding:1.25rem; border-radius:12px; box-shadow:0 2px 6px rgba(0,0,0,0.06); border-left:5px solid var(--green); transition: transform 0.3s ease, box-shadow 0.3s ease;}
-.card:hover {transform: translateY(-5px); box-shadow:0 8px 18px rgba(0,0,0,0.14);}
+/* Default: mobile/tablet — stacked */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+/* Desktop: exactly 4 cards in one row */
+@media (min-width: 1024px) {
+  .grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+}
+
+.card {
+  background: var(--panel);
+  padding: 0.8rem 1rem;          /* smaller top/bottom padding */
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  border-left: 4px solid var(--green);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  margin: 0.4rem 0;              /* smaller vertical gap */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow:0 8px 18px rgba(0,0,0,0.14);
+}
 
 /* Blog section */
 #blog {
@@ -160,6 +191,7 @@ section h2 {text-align:center; margin-bottom:2rem; color:var(--indigo);}
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   position: relative;
   overflow: hidden;
+  border-left: 4px solid var(--green);
 }
 
 .blog-card h3 {
@@ -228,14 +260,49 @@ button:hover {background:var(--green-d); transform:translateY(-1px);}
     margin: 0.5rem auto; /* centers the whole block */
     text-align: left;
 }
-.consent input[type="checkbox"]{ width:1rem; height:1rem; margin:0.2rem 0 0 0; justify-self:start; }
-.consent span{ display:block; white-space:normal; word-break:normal; overflow-wrap:break-word; }
+.consent input[type="checkbox"]{
+  width:1rem;
+  height:1rem;
+  margin:0.2rem 0 0 0;
+  justify-self:start;
+}
+
+.consent span{
+  display:block;
+  white-space:normal;
+  word-break:normal;
+  overflow-wrap:break-word;
+}
 
 /* Footer social buttons alignment */
-footer {background:var(--indigo); color:#fff; text-align:center; padding:2rem 1rem; animation: fadeIn 2s ease-in-out;}
-.social {display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:0.6rem; margin-top:0.5rem;}
-.social a {text-decoration:none; border:1px solid rgba(255,255,255,0.4); padding:0.55rem 0.9rem; border-radius:999px; color:#e3f2fd; transition:.3s ease;}
-.social a:hover {background:rgba(255,255,255,0.12); color:#fff;}
+footer {
+  background:var(--indigo);
+  color:#fff; text-align:center;
+  padding:2rem 1rem;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.social {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-wrap:wrap;
+  /*gap:0.6rem;*/
+  margin-top:0.5rem;
+}
+
+.social a {
+  text-decoration:none;
+  border:1px solid rgba(255,255,255,0.4);
+  padding:0.55rem 0.9rem; border-radius:999px;
+  color:#e3f2fd;
+  transition:.3s ease;
+}
+
+.social a:hover {
+  background:rgba(255,255,255,0.12);
+  color:#fff;
+}
 
 /* Animations */
 @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
@@ -243,14 +310,14 @@ footer {background:var(--indigo); color:#fff; text-align:center; padding:2rem 1r
 
 /* Mobile Responsiveness */
 @media (max-width: 640px) {
-    header {padding:3rem 1rem;}
+    header {padding:2rem 1rem;}
     header h1 {font-size:1.65rem;}
     header p {font-size:1rem;}
     section {padding:2rem 1rem;}
     .grid {gap:1rem;}
     .btn, button {text-align:center;}
     .social {gap:0.5rem;}
-    .social a {flex:1 1 auto; min-width:110px; text-align:center;}
+    .social a {/*flex:1 1 auto; min-width:110px;*/ text-align:center;}
     /* Keep checkbox and text side-by-side on mobile too */
     .consent {grid-template-columns: 1.25rem 1fr;}
 }
