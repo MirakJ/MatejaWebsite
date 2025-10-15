@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <div class="leaf-container" id="leaf-container"></div>
   <header>
     <h1>Pronoia Savjetovanje</h1>
     <p style="font-style: italic;">“Najduže putovanje je putovanje prema unutra. " - Dag Hammarskjold</p>
@@ -199,5 +200,75 @@
     </div>
     
   </footer>
+  <script>
+    const container = document.getElementById("leaf-container");
+    const leafImages = Array.from({ length: 10 }, (_, i) => `images/leaves/leaf_${i + 1}.png`);
+    const numLeaves = 40;
+    
+    // Scatter leaves randomly
+    for (let i = 0; i < numLeaves; i++) {
+      const img = document.createElement("img");
+      img.src = leafImages[Math.floor(Math.random() * leafImages.length)];
+      img.className = "leaf";
+      const size = 40 + Math.random() * 60;
+      img.style.width = `${size}px`;
+      const left = Math.random() * window.innerWidth;
+      const top = Math.random() * window.innerHeight;
+      img.dataset.x = left;
+      img.dataset.y = top;
+      img.style.left = `${left}px`;
+      img.style.top = `${top}px`;
+      container.appendChild(img);
+    }
+    
+    const leaves = document.querySelectorAll(".leaf");
+    
+    let lastScrollY = window.scrollY;
+    let gust = 0, gustTarget = 0;
+    
+    // Track scroll direction and speed
+    window.addEventListener("scroll", () => {
+      const current = window.scrollY;
+      const delta = current - lastScrollY;
+      lastScrollY = current;
+      gustTarget += delta * 2;
+      gustTarget = Math.max(-400, Math.min(400, gustTarget));
+    });
+    
+    function animate(t) {
+      gust += (gustTarget - gust) * 0.1;
+    
+      leaves.forEach((leaf, i) => {
+        let x = parseFloat(leaf.dataset.x);
+        let y = parseFloat(leaf.dataset.y);
+    
+        // Idle motion
+        x += Math.sin(t / 900 + i) * 0.5;
+        y += Math.cos(t / 1100 + i) * 0.2;
+    
+        // Apply wind
+        x += gust * 0.02;
+    
+        // Wrap around screen edges
+        if (x > window.innerWidth) x -= window.innerWidth;
+        if (x < 0) x += window.innerWidth;
+    
+        leaf.dataset.x = x;
+        leaf.dataset.y = y;
+    
+        // Rotate slightly for realism
+        const rot = Math.sin(t / 800 + i) * 10 + gust * 0.05;
+    
+        leaf.style.left = `${x}px`;
+        leaf.style.top = `${y}px`;
+        leaf.style.transform = `rotate(${rot}deg)`;
+      });
+    
+      gustTarget *= 0.94;
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+    </script>
+    
 </body>
 </html>

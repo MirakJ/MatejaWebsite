@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leaf Wind Background</title>
+<style>
+:root{
+  --bg:#f7fbf9;
+  --indigo:#003322;
+}
+body{
+  margin:0;
+  height:200vh;          /* scrollable area */
+  background:var(--bg);
+  color:var(--indigo);
+  font-family:system-ui,sans-serif;
+  overflow-x:hidden;
+}
+
+/* full-screen fixed container */
+.leaf-container{
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+/* each leaf */
+.leaf{
+  position:absolute;
+  opacity:0.9;
+  transform-origin:center;
+  animation:sway 8s ease-in-out infinite alternate;
+  will-change:transform;
+}
+
+@keyframes sway{
+  0%{transform:rotate(-2deg) translateX(-3px);}
+  50%{transform:rotate(2deg) translateX(3px);}
+  100%{transform:rotate(-2deg) translateX(-3px);}
+}
+
+main{
+  text-align:center;
+  padding-top:20vh;
+}
+h1{font-size:3rem;margin-bottom:1rem;}
+p{font-size:1.25rem;}
+</style>
+</head>
+<body>
+
+<div class="leaf-container" id="leaf-container"></div>
+
+<main>
+  <h1>Scroll to Feel the Wind 🍃</h1>
+  <p>Now leaves fill the screen and drift as you scroll.</p>
+</main>
+
+<script>
+    const container = document.getElementById("leaf-container");
+    const leafImages = Array.from({ length: 10 }, (_, i) => `leaves/leaf_${i + 1}.png`);
+    const numLeaves = 40;
+    
+    // scatter leaves
+    for (let i = 0; i < numLeaves; i++) {
+      const img = document.createElement("img");
+      img.src = leafImages[Math.floor(Math.random() * leafImages.length)];
+      img.className = "leaf";
+      img.style.position = "absolute";
+      const size = 40 + Math.random() * 60;
+      img.style.width = `${size}px`;
+      const left = Math.random() * window.innerWidth;
+      const top = Math.random() * window.innerHeight;
+      img.dataset.x = left;
+      img.dataset.y = top;
+      img.style.left = `${left}px`;
+      img.style.top = `${top}px`;
+      container.appendChild(img);
+    }
+    
+    const leaves = document.querySelectorAll(".leaf");
+    
+    let lastScrollY = window.scrollY;
+    let gust = 0, gustTarget = 0;
+    
+    // scroll changes gust target
+    window.addEventListener("scroll", () => {
+      const current = window.scrollY;
+      const delta = current - lastScrollY;
+      lastScrollY = current;
+      gustTarget += delta * 2; // strong reaction
+      gustTarget = Math.max(-400, Math.min(400, gustTarget));
+    });
+    
+    function animate(t) {
+      gust += (gustTarget - gust) * 0.1;
+    
+      leaves.forEach((leaf, i) => {
+        let x = parseFloat(leaf.dataset.x);
+        let y = parseFloat(leaf.dataset.y);
+    
+        // idle drift (small circular sway)
+        x += Math.sin(t / 900 + i) * 0.5;
+        y += Math.cos(t / 1100 + i) * 0.2;
+    
+        // apply wind offset
+        x += gust * 0.02;
+    
+        // keep inside screen bounds
+        if (x > window.innerWidth) x -= window.innerWidth;
+        if (x < 0) x += window.innerWidth;
+    
+        // save updated position
+        leaf.dataset.x = x;
+        leaf.dataset.y = y;
+    
+        // rotate gently
+        const rot = Math.sin(t / 800 + i) * 10 + gust * 0.05;
+    
+        // apply directly to style (real position)
+        leaf.style.left = `${x}px`;
+        leaf.style.top = `${y}px`;
+        leaf.style.transform = `rotate(${rot}deg)`;
+      });
+    
+      gustTarget *= 0.94;
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+    </script>
+    
+    
+    
+    
+    
+
+</body>
+</html>
+
+
