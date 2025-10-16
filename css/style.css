@@ -18,7 +18,7 @@ body {
 }
 
 header {
-    background:var(--indigo);
+    background:var(--muted);
     max-width: 900px;
     border-radius: 8px;
     margin: 2rem auto;
@@ -33,16 +33,16 @@ header {
 header h1 {
     font-size:2.2rem; 
     margin-bottom:1rem; 
-    color:var(--muted);}    
+    color:var(--green);}    
 header p {
     font-size:1.2rem; 
-    color: var(--muted);
+    color: var(--green);
     margin-bottom:1rem;
 }
 
 .btn {
     display:inline-block; 
-    background:var(--indigo);
+    background:var(--green);
     color:#fff; 
     padding:0.75rem 1.5rem; 
     border-radius:8px; 
@@ -62,7 +62,7 @@ section {
     padding:1rem 1rem; 
     max-width:1000px; 
     margin:auto;
-    color: var(--muted);
+    color: var(--green);
     opacity:0; 
     transform: translateY(30px); 
     animation: slideUp 1s forwards;
@@ -130,7 +130,7 @@ section:nth-of-type(2){animation-delay:0.6s;}
 section:nth-of-type(3){animation-delay:0.9s;} 
 section:nth-of-type(4){animation-delay:1.2s;} 
 section:nth-of-type(5){animation-delay:1.5s;}
-section h2 {text-align:center; margin-bottom:2rem; color:var(--muted);}
+section h2 {text-align:center; margin-bottom:2rem; color:var(--green);}
 
 /* Default: mobile/tablet — stacked */
 .grid {
@@ -251,7 +251,7 @@ input, textarea {
 input:focus, textarea:focus {border-color:var(--green); box-shadow:0 0 0 4px rgba(0,103,71,0.15); outline:none;}
 input::placeholder,textarea::placeholder{font-family: Arial, sans-serif; font-size: 1rem; color: #777;}
 input::invalid,textarea:invalid{border-color:#e53935;}
-button {padding:0.85rem 1.2rem; background:var(--indigo); color:#fff; border:none; border-radius:8px; cursor:pointer; transition:.3s ease;}
+button {padding:0.85rem 1.2rem; background:var(--green); color:#fff; border:none; border-radius:8px; cursor:pointer; transition:.3s ease;}
 button:hover {background:var(--green-d); transform:translateY(-1px);}
 
 /* Consent line fix */

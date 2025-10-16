@@ -184,7 +184,7 @@
     })();
   </script>
 
-    <p style="text-align:center; font-size:1rem; max-width:700px; margin:1rem auto 0; color:var(--muted)">
+    <p style="text-align:center; font-size:1rem; max-width:700px; margin:1rem auto 0; color:var(--green)">
       Poštujem vašu privatnost i nikada neću dijeliti vaše podatke.
     </p>
 
@@ -192,7 +192,6 @@
 
   <footer>
     <p>&copy;  2025 Pronoia Savjetovanje. Sva prava pridržana.</p>
-    <p><a href="https://www.vecteezy.com/free-photos/plants" style="color: var(--muted);">Plants Stock photos by Vecteezy</a></p>
     <div class="social">
       <a href="#">Facebook</a>
       <a href="#">Instagram</a>
@@ -235,38 +234,51 @@
       gustTarget = Math.max(-400, Math.min(400, gustTarget));
     });
     
-    function animate(t) {
-      gust += (gustTarget - gust) * 0.1;
-    
-      leaves.forEach((leaf, i) => {
-        let x = parseFloat(leaf.dataset.x);
-        let y = parseFloat(leaf.dataset.y);
-    
-        // Idle motion
-        x += Math.sin(t / 900 + i) * 0.5;
-        y += Math.cos(t / 1100 + i) * 0.2;
-    
-        // Apply wind
-        x += gust * 0.02;
-    
-        // Wrap around screen edges
-        if (x > window.innerWidth) x -= window.innerWidth;
-        if (x < 0) x += window.innerWidth;
-    
-        leaf.dataset.x = x;
-        leaf.dataset.y = y;
-    
-        // Rotate slightly for realism
-        const rot = Math.sin(t / 800 + i) * 10 + gust * 0.05;
-    
-        leaf.style.left = `${x}px`;
-        leaf.style.top = `${y}px`;
-        leaf.style.transform = `rotate(${rot}deg)`;
-      });
-    
-      gustTarget *= 0.94;
-      requestAnimationFrame(animate);
-    }
+function animate(t) {
+  gust += (gustTarget - gust) * 0.1;
+
+  leaves.forEach((leaf, i) => {
+    let x = parseFloat(leaf.dataset.x);
+    let y = parseFloat(leaf.dataset.y);
+
+    // gentle idle motion
+    x += Math.sin(t / 900 + i) * 0.5;
+    y += Math.cos(t / 1100 + i) * 0.2;
+
+    // apply wind
+    x += gust * 0.02;
+
+    // wrap smoothly across edges
+    const margin = 100; // how far off-screen leaves spawn
+    if (x > window.innerWidth + margin) x = -margin;
+    if (x < -margin) x = window.innerWidth + margin;
+    if (y > window.innerHeight + margin) y = -margin;
+    if (y < -margin) y = window.innerHeight + margin;
+
+    leaf.dataset.x = x;
+    leaf.dataset.y = y;
+
+    // fade in when entering from edges
+    const fadeZone = 150;
+    let opacity = 0.9;
+    if (x < fadeZone) opacity = 0.9 * (x / fadeZone);
+    else if (x > window.innerWidth - fadeZone)
+      opacity = 0.9 * ((window.innerWidth - x) / fadeZone);
+    if (opacity < 0) opacity = 0;
+    leaf.style.opacity = opacity;
+
+    // gentle rotation
+    const rot = Math.sin(t / 800 + i) * 10 + gust * 0.05;
+
+    leaf.style.left = `${x}px`;
+    leaf.style.top = `${y}px`;
+    leaf.style.transform = `rotate(${rot}deg)`;
+  });
+
+  gustTarget *= 0.94;
+  requestAnimationFrame(animate);
+}
+
     requestAnimationFrame(animate);
     </script>
     
