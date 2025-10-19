@@ -99,21 +99,22 @@
   </article>
 
   <section id="contact">
-    <h2>Contact Me</h2>
+    <h2>Kontaktirajte me</h2>
     <form id="contact-gform"
           action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScyjmDh9r2qFafLGTjWeUMDSf6XVRPbHFRDJ8U6h8jhciEU8g/formResponse"
           method="POST"
           target="gform_target"
           onsubmit="return gformSubmit()">
   
-      <input type="text" name="entry.493044951" placeholder="Your Name" required>
-      <input type="email" name="entry.650053237" placeholder="Your Email" required>
-      <textarea name="entry.1895619796" placeholder="Your Message" rows="5" required></textarea>
+      <input type="text" name="entry.493044951" placeholder="Vaše ime" required>
+      <input type="email" name="entry.650053237" placeholder="Vaša email adresa" required>
+      <textarea name="entry.1895619796" placeholder="Recite, kako Vam mogu pomoći?" rows="5" required></textarea>
   
       <!-- Consent checkbox -->
       <label class="consent">
         <input type="checkbox" name="consent" required>
-        <span>I agree to be contacted at the email I provided and I consent to the privacy policy.</span>
+        <span>Slažem se da me se može kontaktirati na e-mail adresu koju sam naveo/la 
+          i pristajem na politiku privatnosti.</span>
       </label>
   
       <!-- Honeypot (hidden) -->
@@ -127,7 +128,7 @@
       <input type="hidden" name="usp" value="pp_url">
       <input type="hidden" name="fbzx" id="fbzx">
   
-      <button type="submit" id="contact-submit" class=".btn">Send</button>
+      <button type="submit" id="contact-submit" class=".btn">Pošalji upit</button>
     </form>
   
     <!-- Hidden iframe catches Google’s response -->
@@ -135,7 +136,7 @@
   
     <!-- Custom thank-you message -->
     <p id="thanks" style="display:none; text-align:center; margin-top:0.5rem;">
-      Thanks! Your message has been sent.
+      Hvala. Vaša poruka je poslana.
     </p>
   </section>
   
@@ -197,7 +198,7 @@
 
   <footer>
     <p>&copy;  2025 Pronoia Savjetovanje. Sva prava pridržana.</p>
-    <p><a href="/articles/privacy-policy.html" style="color: var(--muted);">Politika privatnosti</a></p>
+    <p><a href="articles/privacy-policy.html" style="color: var(--muted);">Politika privatnosti</a></p>
 
     <!--
     <div class="social">
