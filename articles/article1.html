@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
+  <div class="leaf-container" id="leaf-container"></div>
   <header>
     <h1>Zašto odabrati grupnu terapiju?</h1>
     <p style="font-style: italic;">
@@ -59,12 +60,97 @@
   <a href="../index.html" class="btn back-btn centered">← Natrag na početnu stranicu</a>
 
   <footer>
-    <p>&copy; 2025 Pronoia Savjetovanje. Sva prava pridržana.</p>
+    <p>&copy;  2025 Pronoia Savjetovanje. Sva prava pridržana.</p>
+    <p><a href="https://www.vecteezy.com/free-photos/plants" style="color: var(--muted);">Plants Stock photos by Vecteezy</a></p>
     <div class="social">
       <a href="#">Facebook</a>
       <a href="#">Instagram</a>
       <a href="#">LinkedIn</a>
     </div>
+  
   </footer>
+
+  <script>
+    const container = document.getElementById("leaf-container");
+    const leafImages = Array.from({ length: 10 }, (_, i) => `../images/leaves/leaf_${i + 1}.png`);
+    const numLeaves = 40;
+    
+    // Scatter leaves randomly
+    for (let i = 0; i < numLeaves; i++) {
+      const img = document.createElement("img");
+      img.src = leafImages[Math.floor(Math.random() * leafImages.length)];
+      img.className = "leaf";
+      const size = 40 + Math.random() * 60;
+      img.style.width = `${size}px`;
+      const left = Math.random() * window.innerWidth;
+      const top = Math.random() * window.innerHeight;
+      img.dataset.x = left;
+      img.dataset.y = top;
+      img.style.left = `${left}px`;
+      img.style.top = `${top}px`;
+      container.appendChild(img);
+    }
+    
+    const leaves = document.querySelectorAll(".leaf");
+    
+    let lastScrollY = window.scrollY;
+    let gust = 0, gustTarget = 0;
+    
+    // Track scroll direction and speed
+    window.addEventListener("scroll", () => {
+      const current = window.scrollY;
+      const delta = current - lastScrollY;
+      lastScrollY = current;
+      gustTarget += delta * 2;
+      gustTarget = Math.max(-400, Math.min(400, gustTarget));
+    });
+    
+function animate(t) {
+  gust += (gustTarget - gust) * 0.1;
+
+  leaves.forEach((leaf, i) => {
+    let x = parseFloat(leaf.dataset.x);
+    let y = parseFloat(leaf.dataset.y);
+
+    // gentle idle motion
+    x += Math.sin(t / 900 + i) * 0.5;
+    y += Math.cos(t / 1100 + i) * 0.2;
+
+    // apply wind
+    x += gust * 0.02;
+
+    // wrap smoothly across edges
+    const margin = 100; // how far off-screen leaves spawn
+    if (x > window.innerWidth + margin) x = -margin;
+    if (x < -margin) x = window.innerWidth + margin;
+    if (y > window.innerHeight + margin) y = -margin;
+    if (y < -margin) y = window.innerHeight + margin;
+
+    leaf.dataset.x = x;
+    leaf.dataset.y = y;
+
+    // fade in when entering from edges
+    const fadeZone = 150;
+    let opacity = 0.9;
+    if (x < fadeZone) opacity = 0.9 * (x / fadeZone);
+    else if (x > window.innerWidth - fadeZone)
+      opacity = 0.9 * ((window.innerWidth - x) / fadeZone);
+    if (opacity < 0) opacity = 0;
+    leaf.style.opacity = opacity;
+
+    // gentle rotation
+    const rot = Math.sin(t / 800 + i) * 10 + gust * 0.05;
+
+    leaf.style.left = `${x}px`;
+    leaf.style.top = `${y}px`;
+    leaf.style.transform = `rotate(${rot}deg)`;
+  });
+
+  gustTarget *= 0.94;
+  requestAnimationFrame(animate);
+}
+
+    requestAnimationFrame(animate);
+  </script>
 </body>
 </html>
