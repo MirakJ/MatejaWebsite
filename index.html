@@ -7,9 +7,10 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <div class="leaf-container" id="leaf-container"></div>
   <header>
     <h1>Pronoia Savjetovanje</h1>
-    <p>Daj neki mini uvod ovdje</p>
+    <p style="font-style: italic;">“Najduže putovanje je putovanje prema unutra. " - Dag Hammarskjold</p>
   </header>
   <article class="therapy-article">
     <section id="about">
@@ -47,17 +48,17 @@
 
         <a href="articles/article2-EDMR.html" class="blog-card">
           <h3>EDMR, što je to?</h3>
-          <p>Treba dodati neki opis</p>
+          <p>Znanstveno dokazana i uspješna metoda u liječenju PTSP-a.</p>
         </a>
 
         <a href="articles/article3-PEAT.html" class="blog-card">
           <h3>Što je PEAT?</h3>
-          <p>Treba dodati neki opis</p>
+          <p>Uzrok svih negativnih emocija jest poremećaj u energetskom sistemu tijela.</p>
         </a>
 
         <a href="articles/article4-individualni.html" class="blog-card">
           <h3>Individualni rad s klijentima</h3>
-          <p>Treba dodati neki opis</p>
+          <p>Rad na osobnim temama u sigurnom okruženju.</p>
         </a>
 
         <a href="articles/article5-fraktali.html" class="blog-card">
@@ -98,61 +99,97 @@
   </article>
 
   <section id="contact">
-    <h2>Kontaktiraj me</h2>
-    <form id="contact-form" action="https://formspree.io/f/XXXXXXXX" method="POST">
-      <input type="text" name="name" placeholder="Tvoje ime" required>
-      <input type="email" name="email" placeholder="Adresa elektronske pošte" required>
-      <textarea name="message" rows="5" placeholder="Reci mi, kako ti mogu pomoći?" required></textarea>
+    <h2>Contact Me</h2>
+    <form id="contact-gform"
+          action="https://docs.google.com/forms/u/0/d/e/1FAIpQLScyjmDh9r2qFafLGTjWeUMDSf6XVRPbHFRDJ8U6h8jhciEU8g/formResponse"
+          method="POST"
+          target="gform_target"
+          onsubmit="return gformSubmit()">
+  
+      <input type="text" name="entry.493044951" placeholder="Your Name" required>
+      <input type="email" name="entry.650053237" placeholder="Your Email" required>
+      <textarea name="entry.1895619796" placeholder="Your Message" rows="5" required></textarea>
+  
+      <!-- Consent checkbox -->
       <label class="consent">
         <input type="checkbox" name="consent" required>
-        <span>Slažem se da me kontaktirate na e-mail adresu koju sam naveo/la
-           i prihvaćam pravila o privatnosti.</span>
+        <span>I agree to be contacted at the email I provided and I consent to the privacy policy.</span>
       </label>
-
-      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
-      <button type="submit", class=".btn">Pošalji upit</button>
-      
-      <p id="form-status" style="text-align:center; margin:0.5rem 0 0; font-size:0.95rem;"></p>
-      <noscript>
-        <p style="text-align:center">JavaScript is disabled—your message will
-           still be sent via Formspree on submit.</p>
-      </noscript>
+  
+      <!-- Honeypot (hidden) -->
+      <input type="text" name="website" autocomplete="off" tabindex="-1"
+             style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;">
+  
+      <!-- Google metadata -->
+      <input type="hidden" name="fvv" value="1">
+      <input type="hidden" name="draftResponse" value="[]">
+      <input type="hidden" name="pageHistory" value="0">
+      <input type="hidden" name="usp" value="pp_url">
+      <input type="hidden" name="fbzx" id="fbzx">
+  
+      <button type="submit" id="contact-submit" class=".btn">Send</button>
     </form>
+  
+    <!-- Hidden iframe catches Google’s response -->
+    <iframe name="gform_target" id="gform_target" style="display:none"></iframe>
+  
+    <!-- Custom thank-you message -->
+    <p id="thanks" style="display:none; text-align:center; margin-top:0.5rem;">
+      Thanks! Your message has been sent.
+    </p>
+  </section>
+  
+  <script>
+    (function () {
+      const MIN_DWELL_MS = 5000; // require 5s on page before submit
+      const startTime = Date.now();
+  
+      window.gformSubmit = function () {
+        const form   = document.getElementById('contact-gform');
+        const btn    = document.getElementById('contact-submit');
+        const iframe = document.getElementById('gform_target');
+        const fbzx   = document.getElementById('fbzx');
+        const thanks = document.getElementById('thanks');
+  
+        // Honeypot: if filled, block
+        if (form.querySelector('[name="website"]').value.trim() !== "") return false;
+  
+        // Dwell-time: too fast -> block
+        if (Date.now() - startTime < MIN_DWELL_MS) {
+          alert("Please wait a moment before submitting.");
+          return false;
+        }
+  
+        // Prevent double submit
+        if (btn.disabled) return false;
+  
+        // Dynamic token for Google
+        if (fbzx) fbzx.value = String(Date.now());
+  
+        // Show sending state
+        btn.textContent = 'Sending…';
+        btn.disabled = true;
+  
+        // Mark completion
+        function complete() {
+          form.reset();
+          btn.textContent = 'Sent';
+          btn.disabled = true;
+          if (thanks) thanks.style.display = 'block';
+          iframe.removeEventListener('load', onLoad);
+        }
+  
+        // On iframe load or fallback
+        function onLoad() { setTimeout(complete, 200); }
+        iframe.addEventListener('load', onLoad, { once: true });
+        setTimeout(complete, 6000); // fallback
+  
+        return true;
+      };
+    })();
+  </script>
 
-    <script>
-      (function(){
-        const form = document.getElementById('contact-form');
-        const status = document.getElementById('form-status');
-        if(!form) return;
-        form.addEventListener('submit', async function(e){
-          e.preventDefault();
-          status.textContent = 'Sending…';
-          try {
-            const data = new FormData(form);
-            const res = await fetch(form.action, {
-              method: form.method,
-              body: data,
-              headers: { 'Accept': 'application/json' }
-            });
-
-            if (res.ok) {
-              status.textContent = 'Thanks! Your message has been sent.';
-              form.reset();
-            } else {
-              const json = await res.json().catch(()=>({}));
-              status.textContent = json.errors
-                ? json.errors.map(e=>e.message).join(', ')
-                : 'Oops, something went wrong. Please try again.';
-            }
-
-          } catch(err){
-            status.textContent = 'Network error—please try again.';
-          }
-        });
-      })();
-    </script>
-
-    <p style="text-align:center; font-size:1rem; max-width:700px; margin:1rem auto 0;">
+    <p style="text-align:center; font-size:1rem; max-width:700px; margin:1rem auto 0; color:var(--green)">
       Poštujem vašu privatnost i nikada neću dijeliti vaše podatke.
     </p>
 
@@ -165,6 +202,90 @@
       <a href="#">Instagram</a>
       <a href="#">LinkedIn</a>
     </div>
+    
   </footer>
+  <script>
+    const container = document.getElementById("leaf-container");
+    const leafImages = Array.from({ length: 10 }, (_, i) => `images/leaves/leaf_${i + 1}.png`);
+    const numLeaves = 40;
+    
+    // Scatter leaves randomly
+    for (let i = 0; i < numLeaves; i++) {
+      const img = document.createElement("img");
+      img.src = leafImages[Math.floor(Math.random() * leafImages.length)];
+      img.className = "leaf";
+      const size = 40 + Math.random() * 60;
+      img.style.width = `${size}px`;
+      const left = Math.random() * window.innerWidth;
+      const top = Math.random() * window.innerHeight;
+      img.dataset.x = left;
+      img.dataset.y = top;
+      img.style.left = `${left}px`;
+      img.style.top = `${top}px`;
+      container.appendChild(img);
+    }
+    
+    const leaves = document.querySelectorAll(".leaf");
+    
+    let lastScrollY = window.scrollY;
+    let gust = 0, gustTarget = 0;
+    
+    // Track scroll direction and speed
+    window.addEventListener("scroll", () => {
+      const current = window.scrollY;
+      const delta = current - lastScrollY;
+      lastScrollY = current;
+      gustTarget += delta * 2;
+      gustTarget = Math.max(-400, Math.min(400, gustTarget));
+    });
+    
+function animate(t) {
+  gust += (gustTarget - gust) * 0.1;
+
+  leaves.forEach((leaf, i) => {
+    let x = parseFloat(leaf.dataset.x);
+    let y = parseFloat(leaf.dataset.y);
+
+    // gentle idle motion
+    x += Math.sin(t / 900 + i) * 0.5;
+    y += Math.cos(t / 1100 + i) * 0.2;
+
+    // apply wind
+    x += gust * 0.02;
+
+    // wrap smoothly across edges
+    const margin = 100; // how far off-screen leaves spawn
+    if (x > window.innerWidth + margin) x = -margin;
+    if (x < -margin) x = window.innerWidth + margin;
+    if (y > window.innerHeight + margin) y = -margin;
+    if (y < -margin) y = window.innerHeight + margin;
+
+    leaf.dataset.x = x;
+    leaf.dataset.y = y;
+
+    // fade in when entering from edges
+    const fadeZone = 150;
+    let opacity = 0.9;
+    if (x < fadeZone) opacity = 0.9 * (x / fadeZone);
+    else if (x > window.innerWidth - fadeZone)
+      opacity = 0.9 * ((window.innerWidth - x) / fadeZone);
+    if (opacity < 0) opacity = 0;
+    leaf.style.opacity = opacity;
+
+    // gentle rotation
+    const rot = Math.sin(t / 800 + i) * 10 + gust * 0.05;
+
+    leaf.style.left = `${x}px`;
+    leaf.style.top = `${y}px`;
+    leaf.style.transform = `rotate(${rot}deg)`;
+  });
+
+  gustTarget *= 0.94;
+  requestAnimationFrame(animate);
+}
+
+    requestAnimationFrame(animate);
+  </script>
+    
 </body>
 </html>
