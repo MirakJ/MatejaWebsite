@@ -408,3 +408,37 @@ footer {
   opacity: 0.85;
   transform-origin: center;
 }
+
+/* === Mobile refinements for therapy articles === */
+@media (max-width: 768px) {
+
+  .therapy-article {
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 1.2rem;
+  }
+
+  .therapy-article section {
+    background: transparent;
+  }
+
+  .therapy-article img,
+  .therapy-article .float-left,
+  .therapy-article .float-right {
+    float: none;
+    display: block;
+    margin: 1rem auto;
+    max-width: 90%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  }
+
+  .therapy-article p {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+}
