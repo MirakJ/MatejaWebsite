@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pronoia Savjetovanje</title> 
-<link rel="stylesheet" href="../css/style.css">
+  <link rel="canonical" href="https://www.pronoia-savjetovanje.hr/politika-privatnosti.html">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <div class="leaf-container" id="leaf-container"></div>
@@ -24,10 +25,8 @@
 
     <h2>2. Podaci koji se prikupljaju</h2>
     <p>Prikupljaju se ime, e-mail adresa i sadržaj poruke koje posjetitelj dobrovoljno 
-    šalje putem kontakt obrasca. Također se automatski prikupljaju tehnički podaci 
-    putem Cloudflare usluge, uključujući IP adresu, zemlju iz koje dolazi posjet, 
-    vrstu preglednika, uređaj i osnovne podatke o korištenju stranice. Ti tehnički 
-    podaci obrađuju se u anonimiziranom obliku i ne omogućuju identifikaciju 
+    šalje putem kontakt obrasca. Također se automatski prikupljaju osnovni tehnički podaci i podaci o posjećenosti
+    stranice putem Cloudflare usluge. Ti podaci obrađuju se u anonimiziranom obliku i ne omogućuju identifikaciju 
     posjetitelja.</p>
 
     <h2>3. Kako se prikupljeni podaci koriste</h2>
@@ -66,7 +65,7 @@
     <p><em>Zadnje ažuriranje: studeni 2025.</em></p>
     </section>
   </article>
-  <a href="../index.html" class="btn back-btn centered">Natrag na početnu stranicu</a>
+  <a href="index.html" class="btn back-btn centered">Natrag na početnu stranicu</a>
 
   <footer>
     <p>&copy; 2025 Pronoia Savjetovanje. Sva prava pridržana.</p>
@@ -80,7 +79,7 @@
   </footer>
   <script>
     const container = document.getElementById("leaf-container");
-    const leafImages = Array.from({ length: 10 }, (_, i) => `../images/leaves/leaf_${i + 1}.png`);
+    const leafImages = Array.from({ length: 10 }, (_, i) => `images/leaves/leaf_${i + 1}.png`);
     const numLeaves = 40;
     
     // Scatter leaves randomly
